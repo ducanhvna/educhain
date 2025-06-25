@@ -65,6 +65,29 @@
     },
     "educhain": {
       "some_initial_data": "value"
+    },
+    "gov": {
+      "params": {
+        "min_deposit": [
+          { "amount": "10000000", "denom": "stake" }
+        ],
+        "max_deposit_period": "172800s",
+        "voting_period": "172800s",
+        "quorum": "0.334000000000000000",
+        "threshold": "0.500000000000000000",
+        "veto_threshold": "0.334000000000000000",
+        "burn_vote_quorum": false,
+        "burn_vote_veto": true,
+        "burn_proposal_deposit_prevote": false,
+        "min_initial_deposit_ratio": "0.000000000000000000"
+      },
+      "deposits": [],
+      "proposals": [],
+      "votes": [],
+      "starting_proposal_id": "1",
+      "tally_params": null,
+      "deposit_params": null,
+      "voting_params": null
     }
   }
 }

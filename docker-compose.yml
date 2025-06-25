@@ -1,0 +1,77 @@
+version: "3.8"
+services:
+  node1:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    image: educhain-node:latest
+    container_name: node1
+    ports:
+      - "26657:26657"
+      - "26656:26656"
+      - "1317:1317"
+    volumes:
+      - ./data/node1:/root/.wasmd/data
+      - shared-genesis:/shared
+    environment:
+      - MONIKER=node1
+
+  node2:
+    platform: linux/amd64
+    image: educhain-node:latest
+    container_name: node2
+    ports:
+      - "26667:26657"
+      - "26666:26656"
+      - "1318:1317"
+    volumes:
+      - ./data/node2:/root/.wasmd/data
+      - shared-genesis:/shared
+    environment:
+      - MONIKER=node2
+
+  node3:
+    platform: linux/amd64
+    image: educhain-node:latest
+    container_name: node3
+    ports:
+      - "26677:26657"
+      - "26676:26656"
+      - "1319:1317"
+    volumes:
+      - ./data/node3:/root/.wasmd/data
+      - shared-genesis:/shared
+    environment:
+      - MONIKER=node3
+
+  node4:
+    platform: linux/amd64
+    image: educhain-node:latest
+    container_name: node4
+    ports:
+      - "26687:26657"
+      - "26686:26656"
+      - "1320:1317"
+    volumes:
+      - ./data/node4:/root/.wasmd/data
+      - shared-genesis:/shared
+    environment:
+      - MONIKER=node4
+
+  node5:
+    platform: linux/amd64
+    image: educhain-node:latest
+    container_name: node5
+    ports:
+      - "26697:26657"
+      - "26696:26656"
+      - "1321:1317"
+    volumes:
+      - ./data/node5:/root/.wasmd/data
+      - shared-genesis:/shared
+    environment:
+      - MONIKER=node5
+
+volumes:
+  shared-genesis:

@@ -18,3 +18,4 @@ target/
 go1.21.0.linux-amd64.tar.gz
 go1.21.0.darwin-amd64.tar.gz.1
 go1.21.0.darwin-amd64.tar.gz
+data/

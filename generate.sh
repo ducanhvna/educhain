@@ -38,6 +38,17 @@ git checkout $VERSION
 echo "🔨 Building wasmd..."
 make install
 
+# Thêm $HOME/go/bin vào PATH nếu cần
+export PATH="$HOME/go/bin:$PATH"
+if ! command -v wasmd &> /dev/null; then
+  # Nếu vẫn chưa tìm thấy, thử copy thủ công
+  if [ -f "$HOME/go/bin/wasmd" ]; then
+    sudo cp "$HOME/go/bin/wasmd" /usr/local/bin/
+  elif [ -f "./build/wasmd" ]; then
+    sudo cp "./build/wasmd" /usr/local/bin/
+  fi
+fi
+
 echo "✅ wasmd đã được cài tại: $(which wasmd)"
 echo "🧪 Kiểm tra: wasmd version → $(wasmd version)"
 

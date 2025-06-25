@@ -15,13 +15,9 @@ enable = true
 address = "0.0.0.0:9091"
 
 # ⚙️ Cấu hình mức phí tối thiểu để chấp nhận giao dịch
-minimum-gas-prices = "0.025stake"
-
-# ⚙️ Cấu hình pruning (lưu trữ state)
-[pruning]
-pruning = "default"         # hoặc "nothing", "everything", "custom"
-pruning-keep-recent = "100"
-pruning-interval = "10"
+# Đặt đúng vị trí theo Cosmos SDK >=0.47 (trong section [app] hoặc đầu file, không nằm ngoài section)
+[app]
+pruning = "default"
 
 # ⚙️ Cấu hình snapshot (để state sync nhanh hơn)
 [snapshot]
