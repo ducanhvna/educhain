@@ -1,1 +1,34 @@
-# This file is intentionally left blank.
+# ⚙️ Cấu hình REST API
+[api]
+enable = true
+swagger = true
+address = "tcp://0.0.0.0:1317"
+
+# ⚙️ Cấu hình gRPC
+[grpc]
+enable = true
+address = "0.0.0.0:9090"
+
+# ⚙️ Cấu hình gRPC-Web (nếu frontend cần)
+[grpc-web]
+enable = true
+address = "0.0.0.0:9091"
+
+# ⚙️ Cấu hình mức phí tối thiểu để chấp nhận giao dịch
+minimum-gas-prices = "0.025stake"
+
+# ⚙️ Cấu hình pruning (lưu trữ state)
+[pruning]
+pruning = "default"         # hoặc "nothing", "everything", "custom"
+pruning-keep-recent = "100"
+pruning-interval = "10"
+
+# ⚙️ Cấu hình snapshot (để state sync nhanh hơn)
+[snapshot]
+interval = 1000
+keep_recent = 2
+
+# ⚙️ Cấu hình telemetry (Prometheus)
+[telemetry]
+enabled = false
+prometheus-retention-time = 0

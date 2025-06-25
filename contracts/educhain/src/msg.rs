@@ -1,38 +1,21 @@
-// This file defines the messages that can be sent to the smart contract.
-// It includes request and response types for contract interactions.
-
+use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct InstantiateMsg {
-    pub name: String,
-    pub symbol: String,
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub struct InstantiateMsg {}
+
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub enum ExecuteMsg {
+    RegisterDid { did: String, metadata: String },
+    CreateCourse { course_id: String, info: String },
+    Enroll { course_id: String, did: String },
+    CompleteCourse { course_id: String, did: String },
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct ExecuteMsg {
-    pub transfer: Option<TransferMsg>,
-    pub mint: Option<MintMsg>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct TransferMsg {
-    pub recipient: String,
-    pub amount: u128,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct MintMsg {
-    pub recipient: String,
-    pub amount: u128,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct QueryMsg {
-    pub balance: Option<String>,
-}
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct BalanceResponse {
-    pub balance: u128,
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+pub enum QueryMsg {
+    GetDid { did: String },
+    GetCourse { course_id: String },
+    GetEnrollments { course_id: String },
+    HasCompleted { course_id: String, did: String },
 }

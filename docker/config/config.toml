@@ -1,23 +1,24 @@
-# Configuration settings for the EduChain application
+# Tên node hiển thị trong mạng
+moniker = "node1"
 
-[app]
-name = "EduChain"
-version = "1.0.0"
-description = "A decentralized education platform"
+# Địa chỉ RPC để truy vấn trạng thái node
+[rpc]
+laddr = "tcp://0.0.0.0:26657"
 
-[database]
-type = "sqlite"
-connection_string = "educhain.db"
+# Cấu hình P2P
+[p2p]
+laddr = "tcp://0.0.0.0:26656"
+external_address = "tcp://<public-ip>:26656"  # Nếu có IP công khai
+persistent_peers = ""                         # Sẽ được sinh tự động
+seeds = ""                                    # Có thể dùng seed node nếu muốn
 
-[logging]
-level = "info"
-file = "educhain.log"
+# Cấu hình thời gian block
+consensus.timeout_commit = "1s"
+consensus.timeout_propose = "1s"
 
-[network]
-port = 8080
-host = "0.0.0.0"
+# Cấu hình log
+log_level = "info"
 
-[security]
-enable_ssl = false
-private_key_path = "path/to/private/key.pem"
-public_key_path = "path/to/public/key.pem"
+# Cấu hình node key
+node_key_file = "config/node_key.json"
+priv_validator_key_file = "config/priv_validator_key.json"

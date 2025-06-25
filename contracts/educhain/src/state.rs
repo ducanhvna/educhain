@@ -1,13 +1,8 @@
-// This file defines the state structure of the smart contract. 
-// It includes the data that the contract will store and manage.
+use cosmwasm_std::Addr;
+use cw_storage_plus::{Item, Map};
 
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct State {
-    pub owner: String,
-    pub data: Vec<u8>,
-    pub timestamp: u64,
-}
-
-// Additional state-related functions can be added here.
+pub const OWNER: Item<Addr> = Item::new("owner");
+pub const DIDS: Map<String, String> = Map::new("dids");
+pub const COURSES: Map<String, String> = Map::new("courses");
+pub const ENROLLMENTS: Map<String, Vec<String>> = Map::new("enrollments");
+pub const COMPLETIONS: Map<(String, String), bool> = Map::new("completions");
