@@ -1,0 +1,27 @@
+{
+  "initial_state": {
+    "chain_id": "educhain-1",
+    "genesis_time": "2023-10-01T00:00:00Z",
+    "consensus_params": {
+      "block": {
+        "max_bytes": "22020096",
+        "max_gas": "10000000"
+      }
+    },
+    "validators": [
+      {
+        "address": "validator_address_1",
+        "power": "100"
+      },
+      {
+        "address": "validator_address_2",
+        "power": "100"
+      }
+    ],
+    "app_state": {
+      "educhain": {
+        "some_initial_data": "value"
+      }
+    }
+  }
+}
