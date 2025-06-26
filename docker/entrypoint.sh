@@ -283,11 +283,12 @@ ensure_validator_exists() {
 # Helper: Convert wasm address to wasmvaloper address
 bech32_to_valoper() {
   wasm_addr="$1"
-  # Use the bech32 utility if available, else fallback to python
+  # Use the bech32 utility if available, else fail with error
   if command -v bech32 >/dev/null 2>&1; then
-    bech32 wasmvaloper <<< "$wasm_addr" | tail -n1
+    echo "$wasm_addr" | bech32 wasmvaloper | tail -n1
   else
-    python3 -c "import bech32; hrp, data = bech32.bech32_decode('$wasm_addr'); print(bech32.bech32_encode('wasmvaloper', data))"
+    echo "❌ Lỗi: Không tìm thấy lệnh 'bech32'. Vui lòng cài đặt gói bech32 trong Dockerfile (apk add bech32 hoặc bech32-utils)." >&2
+    exit 1
   fi
 }
 
