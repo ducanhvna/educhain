@@ -114,11 +114,10 @@ fix_validator_power() {
   # Create temporary file
   temp_file="${genesis_file}.tmp"
   # Update the validator's tokens and delegator_shares
-  jq --arg tokens "$new_token_value" --arg shares "$new_token_value.000000000000000000" \
-    '.app_state.staking.validators[0].tokens = $tokens | \
-    .app_state.staking.validators[0].delegator_shares = $shares' "$genesis_file" > "$temp_file"
+  shares_value="${new_token_value}.000000000000000000"
+  jq --arg tokens "$new_token_value" --arg shares "$shares_value" '.app_state.staking.validators[0].tokens = $tokens | .app_state.staking.validators[0].delegator_shares = $shares' "$genesis_file" > "$temp_file"
   # Update delegations
-  jq --arg shares "$new_token_value.000000000000000000" \
+  jq --arg shares "$shares_value" \
     'if .app_state.staking.delegations | length > 0 then
       .app_state.staking.delegations[0].shares = $shares
     else
