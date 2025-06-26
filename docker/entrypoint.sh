@@ -647,6 +647,9 @@ if [ "$MONIKER" = "node1" ]; then
   # Sửa operator_address nếu bị sai prefix
   fix_validator_operator_address "$GENESIS_FILE"
 
+  # Loại bỏ các entry trùng denom 'stake' trong denom_metadata, chỉ giữ lại 1 entry duy nhất
+  jq 'if .app_state.bank.denom_metadata then .app_state.bank.denom_metadata |= (unique_by(.denom)) else . end' "$GENESIS_FILE" > "${GENESIS_FILE}.tmp" && mv "${GENESIS_FILE}.tmp" "$GENESIS_FILE"
+  
   # Kiểm tra genesis.json hợp lệ không
   echo "🔍 Kiểm tra genesis.json hợp lệ..."
   jq . "$GENESIS_FILE" > /dev/null 2>&1 || {
@@ -737,6 +740,9 @@ if [ "$MONIKER" = "node1" ]; then
   cp "$GENESIS_FILE" "/tmp/genesis_final_before_start.json"
   echo "📝 Final genesis saved to /tmp/genesis_final_before_start.json for inspection"
 
+  # Đảm bảo thư mục log tồn tại trước khi ghi log
+  mkdir -p /tmp/logs
+
   # Khởi động node với output trực tiếp vào file log
   echo "🚀 Khởi động node với minimum-gas-prices=0.025stake..."
   wasmd start --home "$HOME_DIR" --minimum-gas-prices="0.025stake" --log_level debug --unsafe-skip-upgrades=1 > /tmp/logs/wasmd.log 2>&1 &
@@ -745,7 +751,7 @@ if [ "$MONIKER" = "node1" ]; then
 
   # Chờ RPC sẵn sàng
   echo "⏳ Đợi node khởi động RPC..."
-  TIMEOUT=180
+  TIMEOUT=600
   START_TIME=$(date +%s)
   NODE_STARTED=false
   
@@ -767,7 +773,7 @@ if [ "$MONIKER" = "node1" ]; then
     if [ $((ELAPSED % 10)) -eq 0 ]; then
       echo "⏳ Vẫn đang chờ node khởi động... ${REMAINING}s còn lại"
       # Kiểm tra tiến trình có còn chạy không
-      if ! ps -p $NODE_PID > /dev/null; then
+      if ! ps | grep -w "$NODE_PID" | grep -v grep > /dev/null; then
         echo "❌ [ERROR] Node process đã dừng hoạt động!"
         echo "⚠️ Xem 50 dòng log cuối cùng:"
         tail -n 50 /tmp/logs/wasmd.log
